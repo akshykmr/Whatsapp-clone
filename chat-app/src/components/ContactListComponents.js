@@ -100,7 +100,7 @@ const ContactComponent =(props) => {
    <ProfileIcon src={userData.profilePic}/>
    <ContactInfo>
 <ContactName>{userData.name}</ContactName>
-<MessageText>Hello broh</MessageText>
+<MessageText>{userData.lastText}</MessageText>
    </ContactInfo>
    <MessageTime>{userData.lastTextTime}</MessageTime>
    </ContactItem>;

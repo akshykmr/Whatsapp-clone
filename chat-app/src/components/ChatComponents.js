@@ -69,8 +69,8 @@ const ChatComponents = ()=>{
     </ProfileHeader>
     <MessageContainer> 
     {messagesList?.map((messageData) => (
-        <MessageDiv isYours={messageData.senderId === 0}>
-            <Message isYours={messageData.senderId === 0}>
+        <MessageDiv isYours={messageData.senderID === 0}>
+            <Message isYours={messageData.senderID=== 0}>
      {messageData.text}
    </Message> 
    </MessageDiv> 
