@@ -30,10 +30,9 @@ function App() {
   return (
   <Container >
   <ContactListComponents/>
-  {selectedChat? <contactComponent />:
-  <Placeholder>
-    <ChatPlaceholder src ="D:\chatapp\chat-app\public\image\welcome-placeholder.jpeg"
-  <Placeholder/>}
+  {selectedChat? <contactComponent />:<Placeholder>
+    <ChatPlaceholder src ="https://static.facebook.com/images/whatsapp/www/whatsapp-promo.png"/>
+  </Placeholder>}
  </Container>
 
   );
