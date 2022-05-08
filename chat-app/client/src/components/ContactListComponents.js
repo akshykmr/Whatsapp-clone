@@ -58,6 +58,9 @@ const ContactItem =styled.div`
  background: white;
  cursor:pointer;
  padding:2px 10px;
+ :hover {
+    background: #ebebeb;
+  }
   `;
   const ProfileIcon = styled(ProfileImage)`
   width: 38px;
@@ -95,8 +98,8 @@ margin-top:11px;
 white-space:nowrap;
 `;
 const ContactComponent =(props) => {
-  const {userData} = props;
-  return <ContactItem>
+  const {userData, setChat} = props;
+  return <ContactItem onClick={()=>setChat(userData)}>
    <ProfileIcon src={userData.profilePic}/>
    <ContactInfo>
 <ContactName>{userData.name}</ContactName>
@@ -106,23 +109,23 @@ const ContactComponent =(props) => {
    </ContactItem>;
   
 };
- const ContactListComponents = ()=>{
+ const ContactListComponents = (props)=>{
 
        return(
         < Container>
         <ProfileInfoDiv>
-        <ProfileImage src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/220px-Elon_Musk_Royal_Society_%28crop2%29.jpg"/>
+        <ProfileImage src="/image/elon.jpeg"/>
             </ProfileInfoDiv>
             <SearchBox>
               <SearchContainer>
                 <SearchIcon
-                src={"https://img.icons8.com/ios-glyphs/344/search--v1.png"}/>
+                src={"/image/search-icon.svg"} />
               <SearchInput placeholder="Search or start new chat"/>
               </SearchContainer>
             </SearchBox>
             {contactList.map((userData) => (
               <ContactComponent
-                userData={userData}
+                userData={userData} setChat={props.setChat}
               />
             ))}
 
