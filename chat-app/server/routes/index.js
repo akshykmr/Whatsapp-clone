@@ -1,13 +1,15 @@
+import * as Controller from "../app/controllers";
+import * as Validation from "../utility/validations";
 const applyRoutes =(app) =>{
-    app.get('/',(req,res)=>
-    res.send(`are bc ye to kam kr gya`))
+    app.get("/",(req,res)=>
+    res.send(`ab na hono isse`))
 
 //creat//
-app.post('/user',(req,res)=>res.send(`creat user`));
-app.post('/login',(req,res)=>res.send(`login`));
-app.post('/channel',(req,res)=>res.send(`channel`));
-app.post('/search-user',(req,res)=>res.send(`serach user`));
-app.post('/channel list',(req,res)=>res.send(`channel list`));
-app.post('/message',(req,res)=>res.send(`message`));
+app.post("/user", Validation.validateCreateUser, Controller.createUser);
+app.post("/login",Validation.validateLogin, Controller.loginUser);
+app.post("/channel",Validation.validateCreateChannel, Controller.createChannel);
+app.get("/search-user",Validation.validateSearchUser, Controller.getChannelList);
+app.get("/channel-list",Validation.validateGetChannelList, Controller.searchUser);
+app.post("/message",Validation.validateAddMessage, Controller.sendMessage);
 };
 export default applyRoutes;
