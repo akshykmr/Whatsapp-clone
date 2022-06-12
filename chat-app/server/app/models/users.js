@@ -19,7 +19,7 @@ userSchema.static({
         return this.find(findObj)
     },
     findOneData: function (findObj) {
-        return this.fineOne(findObj)
+        return this.findOne(findObj)
     },
     findOneAndUpdateData: function (findObj, updateObj){
         return this.findOneAndUpdateData(findObj, updateObj,{

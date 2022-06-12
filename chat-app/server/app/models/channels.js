@@ -10,7 +10,7 @@ const channelSchema = new mongoose.Schema({
 ],
 messages:[
     {
-    senderId: {type: String, default:""},
+    senderID: {type: String, default:""},
     message: {type: String, default:""},
     addedOn: {type: Number, default:Date.now()},
    },
@@ -31,13 +31,13 @@ channelSchema.static({
     findOneData: function (findObj) {
         return this.fineOne(findObj)
     },
-    findOneAndUpdateData: function (findObj, updateObj){
-        return this.findOneAndUpdateData(findObj, updateObj,{
-            upsert: true,
-            new: true,
-            SetDefaultOnInsert:true
-        })
-    },
-})
+    findOneAndUpdateData: function (findObj, updateObj) {
+        return this.findOneAndUpdate(findObj, updateObj, {
+          upsert: true,
+          new: true,
+          setDefaultsOnInsert: true,
+        });
+      },
+    });
 
 export default mongoose.model("chat-app-user", channelSchema);
