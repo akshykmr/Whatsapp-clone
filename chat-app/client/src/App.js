@@ -34,12 +34,13 @@ background-color:white;
   border-radius:50%;
   object-fit:contain;
   `;
-function App() {
+function App(props) {
+  const {userInfo}=props
   const [selectedChat, setChat] = useState();
   return (
   <Container >
   <ContactListComponents 
-  setChat ={setChat} />
+  setChat ={setChat} imageUrl={userInfo.imageUrl}/>
   {selectedChat? <ChatComponents selectedChat={selectedChat}/>:<Placeholder>
     <ChatPlaceholder src ="/image\welcome-placeholder.jpeg"/>
     <span>Keep your phone connected</span>

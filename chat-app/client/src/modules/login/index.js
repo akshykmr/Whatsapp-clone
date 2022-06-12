@@ -57,9 +57,8 @@ const LoginComponent = () => {
     }
     return (
         <>
-          {userInfo ? (
-            <App userInfo={userInfo} />
-          ) : (
+          {userInfo ? 
+            <App userInfo={userInfo}/>: 
             <Container>
               <Header>WHATSAPP WEB CLONE</Header>
               <CardView>
@@ -83,7 +82,7 @@ const LoginComponent = () => {
                 <QRCode src="image/qr-placeholder.png" />
               </CardView>
             </Container>
-          )}
+          }
         </>
       );
     };

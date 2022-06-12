@@ -110,11 +110,11 @@ const ContactComponent =(props) => {
   
 };
  const ContactListComponents = (props)=>{
-
+const {imageUrl}=props
        return(
         < Container>
         <ProfileInfoDiv>
-        <ProfileImage src="/image/elon.jpeg"/>
+        <ProfileImage src={imageUrl||"/image/elon.jpeg"}/>
             </ProfileInfoDiv>
             <SearchBox>
               <SearchContainer>
