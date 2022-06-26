@@ -1,7 +1,10 @@
+
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import GoogleLogin from 'react-google-login';
-import React, { useState } from "react";
+import { GoogleLogin } from "react-google-login";
 import App from "../../App";
+import cookieManager from "../../managers/cookieManager";
+
 
 const Container = styled.div`
   display: flex;
@@ -51,9 +54,14 @@ const QRCode = styled.img`
 `;
 
 const LoginComponent = () => {
-    const [userInfo, setUserInfo] = useState();  
+    const [userInfo, setUserInfo] = useState(); 
+    useEffect(() => {
+      const userData = cookieManager.getUserInfo();
+      if (userData) setUserInfo(userData);
+    }, []);   
     const handleResoponseForGoogle = async (responseData) => {
         setUserInfo(responseData.profileObj)
+        cookieManager.setUserInfo(responseData.profileObj);
     }
     return (
         <>
