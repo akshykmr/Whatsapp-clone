@@ -4,7 +4,9 @@ import styled from "styled-components";
 import { GoogleLogin } from "react-google-login";
 import App from "../../App";
 import cookieManager from "../../managers/cookieManager";
+import axios from "axios";
 
+const API_BASE_URL="http://localhost:3005";
 
 const Container = styled.div`
   display: flex;
@@ -12,7 +14,8 @@ const Container = styled.div`
   width: 100%;
   background-color: #0a0e11;
   height: 100vh;
-`; const Header = styled.div`
+`;
+ const Header = styled.div`
 color: white;
 width: 100%;
 font-weight: bold;
@@ -28,7 +31,7 @@ margin-right: auto;
 margin-top: -80px;
 background-color: white;
 display: flex;
-flex-direction: row;
+flex-direction: row; 
 justify-content: space-evenly;
 gap: 40px;
 flex-wrap: wrap;
@@ -57,12 +60,20 @@ const LoginComponent = () => {
     const [userInfo, setUserInfo] = useState(); 
     useEffect(() => {
       const userData = cookieManager.getUserInfo();
+      console.log("====",userData);
       if (userData) setUserInfo(userData);
     }, []);   
     const handleResoponseForGoogle = async (responseData) => {
-        setUserInfo(responseData.profileObj)
+        setUserInfo(responseData.profileObj);
+        console.log("====",responseData.profileObj);
         cookieManager.setUserInfo(responseData.profileObj);
-    }
+     axios.post(`${API_BASE_URL}/user`,
+     {
+      email:responseData.profileObj.email,
+      name:responseData.profileObj.email,
+      profilePic:responseData.profileObj.imageUrl,
+      });
+    };
     return (
         <>
           {userInfo ? 

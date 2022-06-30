@@ -10,13 +10,7 @@
        await validate(schema, req.body, res, next); 
       },
 
-      validateLogin: async (req, res, next)=>{
-          const schema = yup.object().shape({
-              phoneNumber:yup.number().required(),
-              password:yup.string().required(),
-          });
-          await validate(schema, req.body, res, next);
-      },
+      
       validateChannels: async (req, res, next)=>{
         const schema = yup.object().shape({
             userId: yup.string().required(),
@@ -25,7 +19,7 @@
     },
     validateSearchUser: async (req, res, next)=>{
         const schema = yup.object().shape({
-            phone:yup.number().required(),
+            email:yup.string().required(),
         });
         await validate(schema, req.query, res, next);
     },
