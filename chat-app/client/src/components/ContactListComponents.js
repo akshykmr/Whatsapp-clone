@@ -133,10 +133,6 @@ const onSearchTextChanged = async (searchText) => {
 
   console.log("121",userData);
   };
-
-
-  
-
        return(
         < Container>
         <ProfileInfoDiv>
