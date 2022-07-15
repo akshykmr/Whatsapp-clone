@@ -75,7 +75,7 @@ const ChatComponents = (props) => {
     let channelId = "";
     if (event.key === "Enter") {
       if (!messageList || !messageList.length) {
-        const reqData = [
+        const channelUsers = [
           {
             email: userInfo.email,
             name: userInfo.name,
@@ -87,10 +87,10 @@ const ChatComponents = (props) => {
             profilePic: selectedChat.profilePic,
           },
         ];
-        console.log("1234",reqData);
+        console.log("1234",channelUsers);
 
    const channelResponse = await httpManager.createChannel({
-    reqData,
+    channelUsers,
         });
   console.log("1234",channelResponse);
 
@@ -127,8 +127,8 @@ channelId = channelResponse.data.responseData._id;
     </ProfileHeader>
     <MessageContainer> 
     {messageList?.map((messageData) => (
-        <MessageDiv isYours={messageData.senderID === 0}>
-            <Message isYours={messageData.senderID=== 0}>
+        <MessageDiv isYours={messageData.senderEmail === 0}>
+            <Message isYours={messageData.senderEmail=== 0}>
      {messageData.text}
    </Message> 
    </MessageDiv> 

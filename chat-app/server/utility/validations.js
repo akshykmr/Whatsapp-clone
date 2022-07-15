@@ -37,18 +37,17 @@
         });
         await validate(schema, req.body, res, next);
     },
-    validateAddMessage: async (req, res, next) =>{
+    validateAddMessage: async (req, res, next) => {
         const schema = yup.object().shape({
-        channelId:yup.string().required(),
-        messages:yup.object().shape({
-            senderID: yup.string().required(),
-            message:yup.string().required(),
-        }),
+          channelId: yup.string().required(),
+          messages: yup.object().shape({
+            senderEmail: yup.string().required(),
+            text: yup.string().required(),
+          }),
         });
         await validate(schema, req.body, res, next);
-    },
-  };
-
+      },
+    };
   const validate = async (schema, reqData, res, next) =>{
       try {
           await schema.validate(reqData, { abortEarly: false});
