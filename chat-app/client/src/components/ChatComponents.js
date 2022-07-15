@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import Picker from "emoji-picker-react";
 import { SearchContainer, SearchInput } from "./ContactListComponents";
 import { messagesList } from "../mockData";
+import httpManager from "../managers/httpManager";
 const Container = styled.div`
 display: flex;
 flex-direction:column;
@@ -47,12 +48,11 @@ height:100%;
 background:#e5ddd6;
 overflow-y:auto;
 `;
-const MessageDiv=styled.div`
-justify-content: ${(props) => (props.isYours ? "flex-end" : "flex-start")};
-display:flex;
-margin:5px 15px;
-
- `;
+const MessageDiv = styled.div`
+  display: flex;
+  justify-content: ${(props) => (props.isYours ? "flex-end" : "flex-start")};
+  margin: 5px 15px;
+`;
  const Message=styled.div`
  background: ${(props) => (props.isYours ? "#daf8cb" : "white")};
  max-width:100%;
@@ -62,28 +62,62 @@ margin:5px 15px;
  border-radius:5px;
   `;
 const ChatComponents = (props) => {
-  const {selectedChat} = props;
+  const {selectedChat,userInfo} = props;
   const [text, setText] = useState("");
   const [pickerVisible, togglePicker] = useState(false);
-  const [messageList, setMessageList] = useState(messagesList);
+  const [messageList, setMessageList] = useState([]);
   const onEmojiClick =(event,emojiObj)=>{
     setText(text + emojiObj.emoji);
     togglePicker(false);
   };
-  const onEnterPress = (event)=>{
-    if (event.key ==="Enter"){
- const messages = [...messageList]
- messages.push ({
-  id: 0,
-  messageType: "TEXT",
-  text,
-  senderID: 0,
-  addedOn: "12:08 PM",
-   });
-setMessageList(messages);
-setText("");
-    }
-  };
+
+  const onEnterPress = async (event) => {
+    let channelId = "";
+    if (event.key === "Enter") {
+      if (!messageList || !messageList.length) {
+        const reqData = [
+          {
+            email: userInfo.email,
+            name: userInfo.name,
+            profilePic: userInfo.imageUrl,
+          },
+          {
+            email: selectedChat.email,
+            name: selectedChat.name,
+            profilePic: selectedChat.profilePic,
+          },
+        ];
+        console.log("1234",reqData);
+
+   const channelResponse = await httpManager.createChannel({
+    reqData,
+        });
+  console.log("1234",channelResponse);
+
+channelId = channelResponse.data.responseData._id;
+  console.log("1234",channelId);
+  
+      }
+
+      const messages = [...messageList];
+      const msgReqData = {
+        text,
+        senderEmail: userInfo.email,
+        addedOn: new Date().getTime(),
+      };
+      const messageResponse = await httpManager.sendMessage({
+        channelId,
+        messages: msgReqData,
+      });
+      console.log("1234",{
+      channelId,
+      msgReqData
+    });
+    messages.push(msgReqData);
+    setMessageList(messages);
+    setText("");
+  }
+};
     return (
       < Container>
     <ProfileHeader>

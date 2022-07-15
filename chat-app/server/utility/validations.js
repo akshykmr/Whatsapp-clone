@@ -13,7 +13,7 @@
       
       validateChannels: async (req, res, next)=>{
         const schema = yup.object().shape({
-            userId: yup.string().required(),
+            email: yup.string().required(),
         });
         await validate(schema, req.query, res, next);
     },
@@ -25,9 +25,11 @@
     },
     validateAddChannel: async (req, res, next)=>{
         const schema = yup.object().shape({
-            channelUsers:yup.array().of(yup.object().shape({
+            channelUsers:yup
+            .array().of
+            (yup.object().shape({
                 name : yup.string().required(),
-                _id  :yup.string().required(),
+                email  :yup.string().required(),
                 profilePic:yup.string(),
             }))
             .length(2)

@@ -41,11 +41,14 @@ function App(props) {
   <Container >
   <ContactListComponents 
   setChat ={setChat} imageUrl={userInfo.imageUrl}/>
-  {selectedChat? <ChatComponents selectedChat={selectedChat}/>:<Placeholder>
+  {selectedChat? (<ChatComponents selectedChat={selectedChat} userInfo={userInfo}/>
+  ):(
+  <Placeholder>
     <ChatPlaceholder src ="/image\welcome-placeholder.jpeg"/>
     <span>Keep your phone connected</span>
           WhatsApp connects to your phone to sync messages.
-  </Placeholder>}
+  </Placeholder>
+  )}
  </Container>
 
   );

@@ -42,7 +42,7 @@
     getChannels: async (req, res)=>{
         const requestData=req.query;
         const channelList = await ChannelModel.findData({
-          channelUsers_id:requestData.userId    
+          channelUsers_email:requestData.email    
         }) 
         sendResponse(res,channelList,"Chanel list fetched",true, 200);
     },
