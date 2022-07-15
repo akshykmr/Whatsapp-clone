@@ -4,9 +4,8 @@ import styled from "styled-components";
 import { GoogleLogin } from "react-google-login";
 import App from "../../App";
 import cookieManager from "../../managers/cookieManager";
-import axios from "axios";
+import httpManager from "../../managers/httpManager";
 
-const API_BASE_URL="http://localhost:3005";
 
 const Container = styled.div`
   display: flex;
@@ -60,19 +59,18 @@ const LoginComponent = () => {
     const [userInfo, setUserInfo] = useState(); 
     useEffect(() => {
       const userData = cookieManager.getUserInfo();
-      console.log("====",userData);
+      //console.log("====",userData); 
       if (userData) setUserInfo(userData);
     }, []);   
     const handleResoponseForGoogle = async (responseData) => {
-        setUserInfo(responseData.profileObj);
-        console.log("====",responseData.profileObj);
-        cookieManager.setUserInfo(responseData.profileObj);
-     axios.post(`${API_BASE_URL}/user`,
-     {
-      email:responseData.profileObj.email,
-      name:responseData.profileObj.email,
-      profilePic:responseData.profileObj.imageUrl,
+      await httpManager.createUser({
+        email: responseData.profileObj.email,
+        name: responseData.profileObj.name,
+        profilePic: responseData.profileObj.imageUrl,
       });
+      setUserInfo(responseData.profileObj);
+      cookieManager.setUserInfo(responseData.profileObj);
+  
     };
     return (
         <>

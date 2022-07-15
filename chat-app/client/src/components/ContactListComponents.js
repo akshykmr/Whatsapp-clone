@@ -1,7 +1,10 @@
-  import styled from "styled-components";
-  import { contactList } from "../mockData";
-
-  const Container = styled.div`
+import React, { useState } from "react";
+import styled from "styled-components";
+import httpManager from "../managers/httpManager";
+import { contactList } from "../mockData";
+import utility from "../utility";
+ 
+ const Container = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1.6;
@@ -97,8 +100,15 @@ margin-right:10px;
 margin-top:11px;
 white-space:nowrap;
 `;
+const SearchResults = styled.div`
+  width: 100%;
+  height: 100px;
+`;
 const ContactComponent =(props) => {
   const {userData, setChat} = props;
+   const [searchResult, setSearchResult] = useState();
+
+
   return <ContactItem onClick={()=>setChat(userData)}>
    <ProfileIcon src={userData.profilePic}/>
    <ContactInfo>
@@ -111,6 +121,22 @@ const ContactComponent =(props) => {
 };
  const ContactListComponents = (props)=>{
 const {imageUrl}=props
+const [searchString, setSearchString] = useState("");
+const [searchResult, setSearchResult] = useState("");
+
+const onSearchTextChanged = async (searchText) => {
+  setSearchString(searchText);
+  if (!utility.validateEmail(searchText)) return;
+
+  const userData = await httpManager.searchUser(searchText);
+  if (userData.data?.successs) setSearchResult(userData.data.responseData);
+
+  console.log("121",userData);
+  };
+
+
+  
+
        return(
         < Container>
         <ProfileInfoDiv>
@@ -120,14 +146,25 @@ const {imageUrl}=props
               <SearchContainer>
                 <SearchIcon
                 src={"/image/search-icon.svg"} />
-              <SearchInput placeholder="Search or start new chat"/>
+               <SearchInput
+            placeholder="Search or start new chat"
+            value={searchString}
+            onChange={(e) => onSearchTextChanged(e.target.value)}
+          />
               </SearchContainer>
-            </SearchBox>
-            {contactList.map((userData) => (
-              <ContactComponent
-                userData={userData} setChat={props.setChat}
-              />
-            ))}
+              </SearchBox>
+      {searchResult && (
+        <SearchResults>
+          <ContactComponent userData={searchResult} setChat={props.setChat} />
+        </SearchResults>
+      )}
+      {contactList.map((userData) => (
+        <ContactComponent
+          userData={userData}
+          setChat={props.setChat}
+          
+        />
+      ))}
 
         </Container>
        );
