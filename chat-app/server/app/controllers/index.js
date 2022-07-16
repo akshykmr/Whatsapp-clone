@@ -22,16 +22,7 @@
 
      },
 
-     loginUser : async (req, res)=>{
-    const requestData = req.body;
-    const isUserExist = await UserModel.findOneData({
-        phoneNumber: requestData.phoneNumber,
-        password: requestData.password,
-    });   
-    delete isUserExist.password;
-    if(!isUserExist) return sendError(res, {}, "Invalid credentials");
-    sendResponse(res,isUserExist, "User logged in successfully", true,200);
-    },
+     
 
     createChannel: async (req, res)=>{
         const channelModel = new ChannelModel(req.body)

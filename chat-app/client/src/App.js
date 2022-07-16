@@ -37,11 +37,14 @@ background-color:white;
 function App(props) {
   const {userInfo}=props
   const [selectedChat, setChat] = useState();
+  const [refreshContactList, toggleRefreshContactList] = useState(false);
   return (
   <Container >
   <ContactListComponents 
-  setChat ={setChat} imageUrl={userInfo.imageUrl}/>
-  {selectedChat? (<ChatComponents selectedChat={selectedChat} userInfo={userInfo}/>
+  setChat ={setChat} imageUrl={userInfo.imageUrl}  refreshContactList={refreshContactList}/>
+  {selectedChat? (<ChatComponents selectedChat={selectedChat} userInfo={userInfo} refreshContactList={() =>
+            toggleRefreshContactList(!refreshContactList)
+          }/>
   ):(
   <Placeholder>
     <ChatPlaceholder src ="/image\welcome-placeholder.jpeg"/>

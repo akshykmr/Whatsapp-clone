@@ -62,7 +62,7 @@ const MessageDiv = styled.div`
  border-radius:5px;
   `;
 const ChatComponents = (props) => {
-  const {selectedChat,userInfo} = props;
+  const {selectedChat,userInfo,refreshContactListuygvb } = props;
   const [text, setText] = useState("");
   const [pickerVisible, togglePicker] = useState(false);
   const [messageList, setMessageList] = useState([]);
