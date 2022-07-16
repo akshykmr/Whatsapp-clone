@@ -41,7 +41,7 @@ function App(props) {
   return (
   <Container >
   <ContactListComponents 
-  setChat ={setChat} imageUrl={userInfo.imageUrl}  refreshContactList={refreshContactList}/>
+  setChat ={setChat} userInfo={userInfo}  refreshContactList={refreshContactList}/>
   {selectedChat? (<ChatComponents selectedChat={selectedChat} userInfo={userInfo} refreshContactList={() =>
             toggleRefreshContactList(!refreshContactList)
           }/>

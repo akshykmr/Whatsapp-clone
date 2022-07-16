@@ -4,6 +4,9 @@ import Picker from "emoji-picker-react";
 import { SearchContainer, SearchInput } from "./ContactListComponents";
 import { messagesList } from "../mockData";
 import httpManager from "../managers/httpManager";
+
+
+
 const Container = styled.div`
 display: flex;
 flex-direction:column;

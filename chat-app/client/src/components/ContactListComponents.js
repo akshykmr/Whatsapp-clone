@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import httpManager from "../managers/httpManager";
 import { contactList } from "../mockData";
@@ -105,14 +105,18 @@ const SearchResults = styled.div`
   height: 100px;
 `;
 const ContactComponent =(props) => {
-  const {userData, setChat} = props;
+  const {userData, setChat, userInfo} = props;
    const [searchResult, setSearchResult] = useState();
+    
+   const otherUser =
+   userData.channelUsers.find(
+     (userObj) => userObj.email !== userInfo.email
+   ) || userData;
 
-
-  return <ContactItem onClick={()=>setChat(userData)}>
-   <ProfileIcon src={userData.profilePic}/>
+  return <ContactItem onClick={()=>setChat(otherUser)}>
+   <ProfileIcon src={otherUser.profilePic}/>
    <ContactInfo>
-<ContactName>{userData.name}</ContactName>
+<ContactName>{otherUser.name}</ContactName>
 <MessageText>{userData.lastText}</MessageText>
    </ContactInfo>
    <MessageTime>{userData.lastTextTime}</MessageTime>
@@ -120,9 +124,21 @@ const ContactComponent =(props) => {
   
 };
  const ContactListComponents = (props)=>{
-const {imageUrl,refreshContactList}=props
+const {userInfo,refreshContactList}=props
 const [searchString, setSearchString] = useState("");
 const [searchResult, setSearchResult] = useState("");
+const [contactList, setContactList] = useState([]);
+
+const refreshContacts = async () => {
+  const contactListData = await httpManager.getChannelList(userInfo.email);
+  setContactList(contactListData.data.responseData);
+  setSearchString();
+  setSearchResult();
+};
+
+useEffect(() => {
+  refreshContacts();
+}, [refreshContactList]);
 
 const onSearchTextChanged = async (searchText) => {
   setSearchString(searchText);
@@ -136,7 +152,7 @@ const onSearchTextChanged = async (searchText) => {
        return(
         < Container>
         <ProfileInfoDiv>
-        <ProfileImage src={imageUrl||"/image/elon.jpeg"}/>
+        <ProfileImage src={userInfo.imageUrl||"/image/elon.jpeg"}/>
             </ProfileInfoDiv>
             <SearchBox>
               <SearchContainer>
@@ -158,7 +174,7 @@ const onSearchTextChanged = async (searchText) => {
         <ContactComponent
           userData={userData}
           setChat={props.setChat}
-          
+          userInfo={userInfo}
         />
       ))}
 
