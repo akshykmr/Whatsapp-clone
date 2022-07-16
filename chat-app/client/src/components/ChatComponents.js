@@ -62,7 +62,7 @@ const MessageDiv = styled.div`
  border-radius:5px;
   `;
 const ChatComponents = (props) => {
-  const {selectedChat,userInfo,refreshContactListuygvb } = props;
+  const {selectedChat,userInfo,refreshContactList} = props;
   const [text, setText] = useState("");
   const [pickerVisible, togglePicker] = useState(false);
   const [messageList, setMessageList] = useState([]);
@@ -95,6 +95,7 @@ const ChatComponents = (props) => {
   console.log("1234",channelResponse);
 
 channelId = channelResponse.data.responseData._id;
+refreshContactList();
   console.log("1234",channelId);
   
       }
