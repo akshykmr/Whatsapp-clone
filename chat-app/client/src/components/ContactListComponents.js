@@ -120,7 +120,7 @@ const ContactComponent =(props) => {
   
 };
  const ContactListComponents = (props)=>{
-const {imageUrl}=props
+const {imageUrl,refreshContactList}=props
 const [searchString, setSearchString] = useState("");
 const [searchResult, setSearchResult] = useState("");
 
